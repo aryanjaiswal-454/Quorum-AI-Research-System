@@ -92,14 +92,14 @@ scraped content, the report, and the critique to the terminal.
    eight-second timeout. Text is limited to 6,500 characters per source, and a
    search excerpt is used and labeled if the page blocks direct fetching.
 3. Quorum uses the GPT-OSS Harmony tokenizer to fit the topic, search results,
-   and extracted page text into a prompt budget of up to 4,000 tokens. It trims
+   and extracted page text into a prompt budget of up to 3,500 tokens. It trims
    page excerpts evenly across sources when needed.
 4. Groq generates a report and critique in one request. The configured model
-   is `openai/gpt-oss-120b`, with high reasoning effort, a 3,000-token
+   is `openai/gpt-oss-120b`, with medium reasoning effort, a 3,200-token
    completion cap, and automatic retries disabled.
 
-The app budgets each request as at most 4,000 prompt tokens, up to 3,000
-completion tokens, and an 800-token safety margin: a 7,800-token estimate
+The app budgets each request as at most 3,500 prompt tokens, up to 3,200
+completion tokens, and an 800-token safety margin: a 7,500-token estimate
 against the 8,000 TPM limit shown for the model. Quorum displays this budget
 estimate for each completed run; it is not the provider's actual usage. The
 margin helps account for message formatting and token-estimation differences.

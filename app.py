@@ -79,11 +79,11 @@ with input_column:
 with process_column:
     with st.container(border=True):
         st.subheader("A focused workflow")
-        st.caption("Deeper source reading with high-reasoning synthesis in one TPM-budgeted request.")
+        st.caption("Evidence-led synthesis in one TPM-budgeted Groq request.")
         steps = (
             ("travel_explore", "Find sources", "Searches for up to three relevant results."),
             ("article", "Read for context", "Uses Tavily page text, with direct-fetch fallback."),
-            ("summarize", "Synthesize evidence", "Compares sources using high reasoning in one Groq request."),
+            ("summarize", "Synthesize evidence", "Compares sources using balanced reasoning in one Groq request."),
         )
         for icon, title, description in steps:
             st.markdown(f":material/{icon}: **{title}**")

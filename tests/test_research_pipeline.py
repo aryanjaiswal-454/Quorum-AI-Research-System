@@ -9,6 +9,16 @@ import tools
 
 
 class ReportParsingTests(unittest.TestCase):
+    def test_request_budget_stays_below_groq_tpm_limit(self) -> None:
+        configured_budget = (
+            agents.MAX_PROMPT_TOKENS
+            + agents.MAX_COMPLETION_TOKENS
+            + agents.TPM_SAFETY_MARGIN
+        )
+
+        self.assertEqual(configured_budget, 7500)
+        self.assertLess(configured_budget, agents.GROQ_TPM_LIMIT)
+
     def test_splits_exact_section_markers(self) -> None:
         report, critique = agents._parse_report_and_feedback(
             "===== REPORT =====\nEvidence-based report.\n"

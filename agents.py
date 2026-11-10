@@ -10,8 +10,8 @@ from langchain_groq import ChatGroq
 load_dotenv()
 
 GROQ_TPM_LIMIT = 8000
-MAX_PROMPT_TOKENS = 4000
-MAX_COMPLETION_TOKENS = 3000
+MAX_PROMPT_TOKENS = 3500
+MAX_COMPLETION_TOKENS = 3200
 TPM_SAFETY_MARGIN = 800
 TOKEN_ENCODING = tiktoken.get_encoding("o200k_harmony")
 
@@ -24,7 +24,7 @@ llm = ChatGroq(
     temperature=0,
     max_tokens=MAX_COMPLETION_TOKENS,
     max_retries=0,
-    reasoning_effort="high",
+    reasoning_effort="medium",
 )
 
 research_prompt = ChatPromptTemplate.from_messages(
@@ -45,18 +45,16 @@ research_prompt = ChatPromptTemplate.from_messages(
 
             Return exactly these two sections, in this order:
             ===== REPORT =====
-            Write a concise, well-reasoned report with:
-            - A short introduction defining the scope of the question.
-            - Up to three findings supported by the supplied source text. Identify each source
-              and distinguish direct evidence from interpretation.
-            - A synthesis of agreement, disagreement, and evidence gaps.
-            - A conclusion and source list using only the supplied URLs.
+            Write a concise report (about 350 words) with:
+            - A brief introduction.
+            - Up to three evidence-based findings, each identifying its source.
+            - A short synthesis and conclusion.
+            - A compact source list with supplied URLs.
             Treat search excerpts as limited evidence, not as full-page content. Never infer
             article details from titles or URLs.
             ===== CRITIQUE =====
-            Score the report out of 10. Briefly identify its strongest evidence, one material
-            limitation, and one specific follow-up question or source that would improve confidence.
-            Keep the complete report and critique concise enough to finish within the output limit.""",
+            Score the report out of 10. In a few sentences, name its strongest evidence,
+            one important limitation, and one useful follow-up.""",
         ),
     ]
 )
