@@ -1,12 +1,18 @@
 # Quorum
 
-Quorum is a role-based AI research system. Its research workflow finds up to
-three relevant sources, retrieves available page text, then synthesizes the
-evidence into a concise report and review.
+Quorum is a role-based, web-based retrieval-augmented generation (RAG) research
+system. It finds up to three relevant sources, retrieves available page text,
+and supplies that context to Groq to generate a concise, source-grounded report
+and evidence review.
+
+Quorum uses live web search and page extraction for retrieval; it does not use
+document embeddings or a persistent vector database.
 
 ## Features
 
 - Web search through Tavily, with duplicate URLs removed.
+- Web-based RAG that grounds report generation in retrieved search results and
+  page text.
 - Retrieves page text for every result (up to three), using Tavily's extracted
   text when available and a direct-fetch fallback; labels search-excerpt-only
   results when a page cannot be fetched.
