@@ -1,0 +1,14 @@
+[theme]
+base = "light"
+primaryColor = "#167C72"
+backgroundColor = "#F5F7F5"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#1D2D2A"
+borderColor = "#D9E2DE"
+font = "sans-serif"
+headingFont = "sans-serif"
+codeFont = "monospace"
+baseRadius = "medium"
+showWidgetBorder = true
+paddingTop = "2rem"
+paddingBottom = "3rem"

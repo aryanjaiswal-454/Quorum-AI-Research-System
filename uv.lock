@@ -1038,7 +1038,7 @@ requires-dist = [
     { name = "streamlit", specifier = ">=1.67.0" },
     { name = "tavily-python", specifier = ">=0.3.0" },
     { name = "tenacity", specifier = ">=8.2.0" },
-    { name = "tiktoken", specifier = ">=0.6.0" },
+    { name = "tiktoken", specifier = ">=0.12.0" },
 ]
 
 [[package]]
