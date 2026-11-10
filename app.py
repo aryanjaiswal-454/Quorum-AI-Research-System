@@ -82,7 +82,7 @@ with input_column:
         with st.form("research_form"):
             st.text_input(
                 "Research topic",
-                placeholder="e.g. What are the latest developments in cricket?",
+                placeholder="Enter your research topic here...",
                 key="topic_input",
                 max_chars=300,
             )
