@@ -46,4 +46,4 @@ def scrape_url(url: str) -> str:
         return f"Could not scrape URL: {str(e)}"
     
     
-print(web_search.invoke("What are the recent news of war"))
+print(scrape_url.invoke("https://news.abplive.com/news/i-was-surprised-by-change-at-the-top-remark-sonia-gandhi-reveals-pranab-mukherjee-s-pm-ambition-1875380"))
