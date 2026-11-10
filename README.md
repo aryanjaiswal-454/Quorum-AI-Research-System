@@ -1,8 +1,8 @@
 # Quorum
 
-Quorum is a lightweight AI-assisted research app. It searches the web for up to
-three sources, retrieves available page text, and uses Groq to produce a concise
-report and evidence review.
+Quorum is a role-based AI research system. Its research workflow finds up to
+three relevant sources, retrieves available page text, then synthesizes the
+evidence into a concise report and review.
 
 ## Features
 

@@ -61,8 +61,8 @@ st.header(":material/hub: QUORUM")
 st.caption("RESEARCH WORKSPACE")
 st.title("Turn a question into a clearer picture.")
 st.write(
-    "Quorum finds relevant sources, retrieves available page text, and brings "
-    "the evidence together in a concise report."
+    "Quorum is a role-based AI research system that finds relevant sources, "
+    "retrieves available page text, and synthesizes the evidence into a concise report."
 )
 
 st.space("small")

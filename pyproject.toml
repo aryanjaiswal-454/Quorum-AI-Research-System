@@ -1,7 +1,7 @@
 [project]
-name = "multi-agent-ai-research-system"
+name = "role-based-ai-research-system"
 version = "0.1.0"
-description = "Multi-agent AI research system using Tavily, BeautifulSoup, and OpenAI"
+description = "Role-based AI research system using Tavily, BeautifulSoup, and Groq"
 readme = "README.md"
 authors = [
     { name = "Aryan Jaiswal", email = "45aryanjaiswal45@gmail.com" }
