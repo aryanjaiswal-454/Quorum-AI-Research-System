@@ -128,6 +128,8 @@ track or reserve it, so monitor usage in the Groq dashboard.
   evidence in the source list and report context.
 - If Groq reaches the configured output limit, Quorum preserves the generated
   report and warns that the report or review may be incomplete.
+- If Groq rate-limits a request, Quorum displays a 60-second countdown and
+  enables a manual retry when the wait is over.
 - AI-generated reports can contain errors or unsupported claims. Check the
   linked sources before relying on the findings.
 - Never commit API keys or paste them into source files.

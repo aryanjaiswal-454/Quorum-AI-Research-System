@@ -1,9 +1,12 @@
+import math
 import time
 
 import streamlit as st
-from groq import APIError
+from groq import APIError, RateLimitError
 
 from pipeline import run_research_pipeline
+
+RETRY_COOLDOWN_SECONDS = 60
 
 st.set_page_config(
     page_title="Quorum | Research workspace",
@@ -27,11 +30,35 @@ def apply_example_topic() -> None:
         st.session_state.topic_input = selected_topic
 
 
+def seconds_until_retry(retry_at: float, now: float | None = None) -> int:
+    current_time = time.time() if now is None else now
+    return max(0, math.ceil(retry_at - current_time))
+
+
+def start_research() -> None:
+    st.session_state.results = {}
+    st.session_state.running = True
+    st.session_state.done = False
+    st.session_state.rate_limit_retry_at = None
+
+
+@st.fragment(run_every="1s")
+def render_rate_limit_countdown(retry_at: float) -> None:
+    remaining = seconds_until_retry(retry_at)
+    if remaining == 0:
+        st.rerun()
+    st.info(
+        f"Groq is temporarily rate-limited. Try again in **{remaining} seconds**."
+    )
+
+
 for key, default in (("results", {}), ("running", False), ("done", False)):
     if key not in st.session_state:
         st.session_state[key] = default
+st.session_state.setdefault("rate_limit_retry_at", None)
 
-st.markdown(":material/hub: **QUORUM** · RESEARCH WORKSPACE")
+st.header(":material/hub: QUORUM")
+st.caption("RESEARCH WORKSPACE")
 st.title("Turn a question into a clearer picture.")
 st.write(
     "Quorum finds relevant sources, retrieves available page text, and brings "
@@ -64,6 +91,10 @@ with input_column:
                 type="primary",
                 icon=":material/arrow_forward:",
                 width="stretch",
+                disabled=(
+                    st.session_state.rate_limit_retry_at is not None
+                    and seconds_until_retry(st.session_state.rate_limit_retry_at) > 0
+                ),
             )
 
         if run_button:
@@ -71,9 +102,7 @@ with input_column:
             if not topic:
                 st.warning("Enter a research topic to get started.", icon=":material/info:")
             else:
-                st.session_state.results = {}
-                st.session_state.running = True
-                st.session_state.done = False
+                start_research()
                 st.rerun()
 
 with process_column:
@@ -116,6 +145,10 @@ if st.session_state.running and not st.session_state.done:
             "critic": pipeline_result["feedback"],
         }
         pipeline_succeeded = True
+    except RateLimitError:
+        st.session_state.rate_limit_retry_at = (
+            time.time() + RETRY_COOLDOWN_SECONDS
+        )
     except (APIError, ValueError) as exc:
         st.error(f"Research failed: {exc}", icon=":material/error:")
     finally:
@@ -124,6 +157,22 @@ if st.session_state.running and not st.session_state.done:
 
     if pipeline_succeeded:
         st.rerun()
+
+retry_at = st.session_state.rate_limit_retry_at
+if retry_at is not None:
+    remaining = seconds_until_retry(retry_at)
+    if remaining > 0:
+        render_rate_limit_countdown(retry_at)
+    else:
+        st.success("The wait is over. You can try your research again.")
+        if st.button(
+            "Try again",
+            type="primary",
+            icon=":material/refresh:",
+            key="retry_after_rate_limit",
+        ):
+            start_research()
+            st.rerun()
 
 results = st.session_state.results
 if results:
